@@ -1,4 +1,4 @@
-# arkiv27syv
+# arkiv24syv
 This can (when finished) create a mirror of 24syv podcast archive
 
 URL for the archive is https://arkiv.radio24syv.dk/
