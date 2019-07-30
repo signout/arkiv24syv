@@ -1,8 +1,8 @@
 # arkiv24syv
 This can (when finished) create a mirror of 24syv podcast archive
 
-URL for the archive is https://arkiv.radio24syv.dk/
-URL for a specific podcast is https://arkiv.radio24syv.dk/audiopodcast/channel/4466232
+URL for the archive is https://arkiv.radio24syv.dk/  
+URL for a specific podcast is https://arkiv.radio24syv.dk/audiopodcast/channel/4466232  
 URL for all podcasts as RSS can be found at https://arkiv.radio24syv.dk/rss it gives 100 results per page and the rest are on sequentially numbered URLs like http://arkiv.radio24syv.dk/rss?p=2
 
 
