@@ -1,4 +1,9 @@
+#!/usr/bin/python3
+
+#import pprint
 import feedparser
+
+#pp = pprint.PrettyPrinter(indent=2)
 url= "https://arkiv.radio24syv.dk/rss"
 feed = feedparser.parse(url)
 
@@ -6,9 +11,20 @@ for post in feed.entries:
   date = "(%d/%02d/%02d)" % (post.published_parsed.tm_year,\
     post.published_parsed.tm_mon, \
     post.published_parsed.tm_mday)
+  #pp.pprint(post)
   print("post date: " + date)
   print("post title: " + post.title)
   print("post link: " + post.link)	
   print("post description: " + post.description)
   print("post guid: " + post.guid)
-#  print("post enclosure: " + post.enclosure)
+  print("post links:")
+  for link in post.links:
+    print("  " + link.href)
+    if 'length' in link:
+      print("    length: " + link.length)
+    if 'type' in link:
+      print("    type: " + link.type)
+    if 'rel' in link:
+      print("    rel: " + link.rel)
+
+# vim: set ts=2 sw=2 et:
