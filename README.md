@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS items (
   itunessummary,
   itunessubtitle,
   itunesauthor,
-  itunesduration,i
-  tunesimage
+  itunesduration,
+  itunesimage
 );
 PRAGMA table_info(items);
 ```
