@@ -1,0 +1,61 @@
+#!/usr/local/bin/python3
+
+import feedparser
+
+url= "https://arkiv.radio24syv.dk/rss"
+feed = feedparser.parse(url)
+
+def get_enclosureurl():
+  return()
+
+def get_enclusoretype():
+  return()
+
+def get_enclosurelength():
+  return()
+
+def get_title():
+  return(post.title)
+
+def get_link():
+  return(post.link)
+
+def get_description():
+  return(post.description)
+
+def get_descriptionimage():
+  return()
+
+def get_guid():
+  return(post.guid.split("/")[4])
+
+def get_pubdate():
+  date = "%d/%02d/%02d" % (post.published_parsed.tm_year,\
+    post.published_parsed.tm_mon, \
+    post.published_parsed.tm_mday)
+  return(date)
+
+def get_itunessummary():
+  return()
+
+def get_itunes_subtitle():
+  return()
+
+def get_itunesauthor():
+  return()
+
+def get_itunesduration():
+  return(post.itunes_duration())
+
+def get_itunesimage():
+  return()
+
+
+for post in feed.entries:
+  print("----------------")
+  print(get_guid())
+  print(get_pubdate())
+  print(get_title())
+  print(get_link())
+  print(get_description())
+  print(get_itunesduration())
