@@ -53,11 +53,17 @@ def get_summary():
 def get_duration():
   return(post.itunes_duration)
 
-
 for post in feed.entries:
+  cursor.execute('''SELECT count(*) FROM items WHERE guid = ?''', (get_guid(),))
+  if cursor.fetchone()[0]==0:
+    print("Inserted " + get_guid())
+    cursor.execute('''INSERT INTO items(entirepost, contenturl, duration, filesize, pubdate, guid) VALUES(?,?,?,?,?,?)''', (json.dumps(post), get_enclosureurl(), get_duration(), get_enclosurelength(), get_pubdate(), get_guid()))
+  else:
+    print("Skipped " + get_guid())
+
   print("----------------")
-  cursor.execute('''INSERT INTO items(entirepost, contenturl, duration, filesize, pubdate, guid) VALUES(?,?,?,?,?,?)''', (json.dumps(post), get_enclosureurl(), get_duration(), get_enclosurelength(), get_pubdate(), get_guid()))
-  print("Inserted " + get_guid())
+#  cursor.execute('''INSERT INTO items(entirepost, contenturl, duration, filesize, pubdate, guid) VALUES(?,?,?,?,?,?)''', (json.dumps(post), get_enclosureurl(), get_duration(), get_enclosurelength(), get_pubdate(), get_guid()))
+#  print("Inserted " + get_guid())
 
 db.commit()
 db.close()
