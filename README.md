@@ -13,20 +13,15 @@ URL for all podcasts as RSS can be found at https://arkiv.radio24syv.dk/rss it g
 sqlite3 arkiv24syv.db
 CREATE TABLE IF NOT EXISTS items (
   x INTEGER PRIMARY KEY ASC,
-  enclosureurl,
-  enclosuretype,
-  enclosurelength,
+  entirepost,
+  contenturl,
+  filesize,
   title,
   link,
   description,
-  descriptionimage,
   guid,
   pubdate,
-  itunessummary,
-  itunessubtitle,
-  itunesauthor,
-  itunesduration,
-  itunesimage
+  duration
 );
 PRAGMA table_info(items);
 ```
