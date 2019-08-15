@@ -66,3 +66,28 @@ Kriminalitetsnævn afgør flest sager om børn under 15 årVrede guatemalanere k
   <itunes:image href="https://arkiv.radio24syv.dk/49543331/54202478/dfc90ad8eaf93453562ed3961e565a5f/standard/download-thumbnail.jpg/thumbnail.jpg"/>
 </item>
 ```
+
+Occationally it seems like they insert items other than at the top of the list. Maybe I should load two or three pages or maybe sift through all of them from time to time.
+
+Looks like this  
+```
+Inserted 54754594
+Inserted 54753152
+Inserted 54751787
+Inserted 54591692
+Inserted 54754669
+Inserted 54750313
+Inserted 54748965
+Inserted 54750298
+Inserted 54747800
+Inserted 54748950
+Inserted 54746733
+Inserted 54747794
+Inserted 54745667
+Skipped 54744568
+Inserted 54746811
+Skipped 54743553
+Skipped 54742558
+Skipped 54741514
+Skipped 54740278
+```

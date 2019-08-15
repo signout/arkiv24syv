@@ -61,11 +61,6 @@ for post in feed.entries:
   else:
     print("Skipped " + get_guid())
 
-  print("----------------")
-#  cursor.execute('''INSERT INTO items(entirepost, contenturl, duration, filesize, pubdate, guid) VALUES(?,?,?,?,?,?)''', (json.dumps(post), get_enclosureurl(), get_duration(), get_enclosurelength(), get_pubdate(), get_guid()))
-#  print("Inserted " + get_guid())
-
 db.commit()
 db.close()
-
 
