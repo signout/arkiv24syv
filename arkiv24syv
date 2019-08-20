@@ -19,7 +19,8 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS items (
   description,
   guid,
   pubdate,
-  duration
+  duration,
+  downloaded
 );''')
 db.commit
 
