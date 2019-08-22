@@ -1,17 +1,32 @@
 #!/usr/local/bin/python3
 
+# This line should be the only one you need to edit
+#downloaddir = '/Users/signout/Desktop/arkiv24syv/filer/'
+downloaddir = '/Users/signout/Desktop/arkiv24syv/filer/hest/'
+
+# import some stuff we need
 import sqlite3
 import requests
 import os
 from urllib.parse import urlparse
 
+# Various strings
 version = '0.0.3'
 debug = 1
+headers = {'user-agent': 'test-app/' + version}
+sql_get_a_file = """SELECT guid, contenturl, filesize, duration FROM items WHERE downloaded = 0 ORDER BY RANDOM() LIMIT 1"""
+sql_set_downloaded = """UPDATE items SET downloaded = 1 where guid = ?"""
+
+# Make sure the download dir exists by creating it
+os.makedirs(downloaddir, exist_ok=True) 
+
+
 db = sqlite3.connect('arkiv24syv.db')
 cursor = db.cursor()
-downloaddir = '/Users/signout/Desktop/arkiv24syv/filer/'
-headers = {'user-agent': 'test-app/' + version}
+cursor.execute("SELECT guid, contenturl, filesize, duration FROM items WHERE downloaded = 0 ORDER BY RANDOM() LIMIT 1")
 
+
+### Function for downloading the file
 def download_file(url):
   if (debug):
     print("Starting download of " + url)
@@ -24,20 +39,22 @@ def download_file(url):
           for chunk in r.iter_content(chunk_size=8192):
               if chunk: # filter out keep-alive new chunks
                   f.write(chunk)
-  return local_filename
+  return 1
 
 
-cursor.execute("SELECT guid, contenturl, filesize, duration FROM items WHERE downloaded = 0 ORDER BY RANDOM() LIMIT 1")
 
 exist = cursor.fetchone()
 if exist:
-  download_file(exist[1])
+  if (download_file(exist[1])):
+    guid = exist[0]
+    if (debug):
+      print("Updating the downloaded flag for guid " + guid)
+    cursor.execute(sql_set_downloaded, (guid,))
 else:
-  print("Nothing to do")
+  if (debug):
+    print("Nothing to do")
   exit() # Nothing to do
 
-os.makedirs(downloaddir, exist_ok=True) 
-#Request.add_header('user-agent', 'arkiv24syv' + version)
 
 db.close()
 
