@@ -31,7 +31,9 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS items (
 db.commit
 
 def get_enclosureurl():
-  return(post.links[0].href)
+  string = post.links[0].href
+  string = string.strip('?source=podcast')
+  return(string)
 
 def get_enclosurelength():
   return(post.links[0].length)
@@ -64,7 +66,7 @@ for post in feed.entries:
   cursor.execute('''SELECT count(*) FROM items WHERE guid = ?''', (get_guid(),))
   if cursor.fetchone()[0]==0:
     if (debug):
-      print("Inserted " + get_guid())
+      print("Inserting " + get_guid())
     cursor.execute('''INSERT INTO items(entirepost, contenturl, duration, filesize, pubdate, guid) VALUES(?,?,?,?,?,?)''', (json.dumps(post), get_enclosureurl(), get_duration(), get_enclosurelength(), get_pubdate(), get_guid()))
   else:
     if (debug):
