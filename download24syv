@@ -1,0 +1,43 @@
+#!/usr/local/bin/python3
+
+import sqlite3
+import requests
+import os
+from urllib.parse import urlparse
+
+version = '0.0.3'
+debug = 1
+db = sqlite3.connect('arkiv24syv.db')
+cursor = db.cursor()
+downloaddir = '/Users/signout/Desktop/arkiv24syv/filer/'
+headers = {'user-agent': 'test-app/' + version}
+
+def download_file(url):
+  if (debug):
+    print("Starting download of " + url)
+
+  local_filename = url.split('/')[-1]
+  # NOTE the stream=True parameter below
+  with requests.get(url, stream=True, headers=headers) as r:
+      r.raise_for_status()
+      with open(downloaddir + local_filename, 'wb') as f:
+          for chunk in r.iter_content(chunk_size=8192):
+              if chunk: # filter out keep-alive new chunks
+                  f.write(chunk)
+  return local_filename
+
+
+cursor.execute("SELECT guid, contenturl, filesize, duration FROM items WHERE downloaded = 0 ORDER BY RANDOM() LIMIT 1")
+
+exist = cursor.fetchone()
+if exist:
+  download_file(exist[1])
+else:
+  print("Nothing to do")
+  exit() # Nothing to do
+
+os.makedirs(downloaddir, exist_ok=True) 
+#Request.add_header('user-agent', 'arkiv24syv' + version)
+
+db.close()
+
