@@ -67,7 +67,7 @@ for post in feed.entries:
   if cursor.fetchone()[0]==0:
     if (debug):
       print("Inserting " + get_guid())
-    cursor.execute('''INSERT INTO items(entirepost, contenturl, duration, filesize, pubdate, guid, downloaded) VALUES(?,?,?,?,?,?,?)''', (json.dumps(post), get_enclosureurl(), get_duration(), get_enclosurelength(), get_pubdate(), get_guid(), 0))
+    cursor.execute('''INSERT INTO items(entirepost, contenturl, duration, filesize, pubdate, guid, downloaded) VALUES(?,?,?,?,?,?,?)''', (json.dumps(post), get_enclosureurl(), get_duration(), get_enclosurelength(), get_pubdate(), get_guid(), '0'))
   else:
     if (debug):
       print("Skipped " + get_guid())
