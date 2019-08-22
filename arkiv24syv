@@ -4,9 +4,15 @@ import feedparser
 import sqlite3
 import json
 
-url= "https://arkiv.radio24syv.dk/rss"
+debug = 1;
+page = "1";
+url = 'https://arkiv.radio24syv.dk/rss?p=' + page
 feed = feedparser.parse(url)
 db = sqlite3.connect('arkiv24syv.db')
+
+if (debug):
+  print ("Page is: " + page);
+  print ("url is: " + url);
 
 cursor = db.cursor()
 cursor.execute('''CREATE TABLE IF NOT EXISTS items (
@@ -57,10 +63,12 @@ def get_duration():
 for post in feed.entries:
   cursor.execute('''SELECT count(*) FROM items WHERE guid = ?''', (get_guid(),))
   if cursor.fetchone()[0]==0:
-    print("Inserted " + get_guid())
+    if (debug):
+      print("Inserted " + get_guid())
     cursor.execute('''INSERT INTO items(entirepost, contenturl, duration, filesize, pubdate, guid) VALUES(?,?,?,?,?,?)''', (json.dumps(post), get_enclosureurl(), get_duration(), get_enclosurelength(), get_pubdate(), get_guid()))
   else:
-    print("Skipped " + get_guid())
+    if (debug):
+      print("Skipped " + get_guid())
 
 db.commit()
 db.close()
