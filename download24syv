@@ -15,6 +15,7 @@ debug = 1
 headers = {'user-agent': 'test-app/' + version}
 sql_get_a_file = """SELECT guid, contenturl, filesize, duration FROM items WHERE downloaded = '0' ORDER BY RANDOM() LIMIT 1"""
 sql_set_downloaded = """UPDATE items SET downloaded = '1' where guid = ?"""
+sql_set_downloaded_image = """UPDATE items SET imagedownloaded = '1' where guid = ?"""
 
 # Make sure the download dir exists by creating it
 os.makedirs(downloaddir, exist_ok=True) 
@@ -46,7 +47,7 @@ def download_file(url):
 
 db = sqlite3.connect('arkiv24syv.db')
 cursor = db.cursor()
-cursor.execute("SELECT guid, contenturl, filesize, duration FROM items WHERE downloaded = '0' ORDER BY RANDOM() LIMIT 1")
+cursor.execute("SELECT guid, contenturl, filesize, duration, imagelink FROM items WHERE downloaded = '0' ORDER BY RANDOM() LIMIT 1")
 
 exist = cursor.fetchone()
 if exist:
@@ -55,6 +56,13 @@ if exist:
     if (debug):
       print("Updating the downloaded flag for guid " + guid)
     cursor.execute(sql_set_downloaded, (guid,))
+
+  if (download_file(exist[4])):
+    guid = exist[0]
+    if (debug):
+      print("Updating the downloaded image flag for guid " + guid)
+    cursor.execute(sql_set_downloaded_image, (guid,))
+
 else:
   if (debug):
     print("Nothing to do")
