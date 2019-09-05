@@ -5,8 +5,17 @@ URL for the archive is https://arkiv.radio24syv.dk/
 URL for a specific podcast is https://arkiv.radio24syv.dk/audiopodcast/channel/4466232  
 URL for all podcasts as RSS can be found at https://arkiv.radio24syv.dk/rss it gives 100 results per page and the rest are on sequentially numbered URLs like http://arkiv.radio24syv.dk/rss?p=2
 
+
+pkg install python3
+pkg install py36-feedparser
+pkg install sqlite3
+pkg install py36-sqlite3
+pkg install py36-requests
+
+
 pip3 install requests  
 
+CREATE INDEX idx_guid ON items(guid,downloaded);
 
 ### DB layout
 
