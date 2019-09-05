@@ -29,7 +29,8 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS items (
   duration,
   downloaded,
   imagedownloaded,
-  sha256sum
+  filesha256sum,
+  imagesha256sum
 );''')
 db.commit
 
